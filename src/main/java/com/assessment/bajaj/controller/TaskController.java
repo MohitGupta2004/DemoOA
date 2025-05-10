@@ -25,15 +25,13 @@ public class TaskController {
     }
 
    @PostMapping
-public ResponseEntity<ResponseDto> task(@RequestBody RequestDto request, HttpServletRequest req) {
-    System.out.println("POST method called. Method: " + req.getMethod());
+public ResponseEntity<ResponseDto> task(@RequestBody RequestDto request) {
     ResponseDto response = taskService.task(request);
     return ResponseEntity.ok(response);
 }
 
 @GetMapping
-public ResponseEntity<Map<String, Integer>> get(HttpServletRequest req) {
-    System.out.println("GET method called. Method: " + req.getMethod());
+public ResponseEntity<Map<String, Integer>> get() {
     return ResponseEntity.ok(Map.of("operation_code", 1));
 }
 }

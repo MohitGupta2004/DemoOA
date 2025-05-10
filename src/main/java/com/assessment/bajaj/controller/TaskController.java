@@ -24,15 +24,16 @@ public class TaskController {
         this.taskService = taskService;
     }
 
-    @PostMapping
-    public ResponseEntity<ResponseDto> task(@RequestBody RequestDto request) {
-        ResponseDto response = taskService.task(request);
-        return ResponseEntity.ok(response);
-    }
+   @PostMapping
+public ResponseEntity<ResponseDto> task(@RequestBody RequestDto request, HttpServletRequest req) {
+    System.out.println("POST method called. Method: " + req.getMethod());
+    ResponseDto response = taskService.task(request);
+    return ResponseEntity.ok(response);
+}
 
-    @GetMapping
-    public ResponseEntity<Map<String, Integer>> get() {
-        Map<String, Integer> response = Map.of("operation_code", 1);
-        return ResponseEntity.ok(response);
-    }
+@GetMapping
+public ResponseEntity<Map<String, Integer>> get(HttpServletRequest req) {
+    System.out.println("GET method called. Method: " + req.getMethod());
+    return ResponseEntity.ok(Map.of("operation_code", 1));
+}
 }

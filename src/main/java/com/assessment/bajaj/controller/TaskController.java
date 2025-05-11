@@ -3,6 +3,7 @@ package com.assessment.bajaj.controller;
 import com.assessment.bajaj.Dto.RequestDto;
 import com.assessment.bajaj.Dto.ResponseDto;
 import com.assessment.bajaj.service.TaskService;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -25,16 +26,22 @@ public class TaskController {
         this.taskService = taskService;
     }
 
-@GetMapping
-public ResponseEntity<Map<String, Integer>> get(HttpServletResponse response) {
-    response.setHeader("Cache-Control", "no-store");
-    return ResponseEntity.ok(Map.of("operation_code", 1));
-}
+ @PostMapping
+    public ResponseEntity<?> task(@RequestBody RequestDto request, HttpServletResponse response, HttpServletRequest req) {
+        response.setHeader("Cache-Control", "no-store, no-cache, must-revalidate, proxy-revalidate");
+        response.setHeader("Pragma", "no-cache");
+        response.setDateHeader("Expires", 0);
+        System.out.println("POST HIT ✅ method: " + req.getMethod());
+        return ResponseEntity.ok(taskService.task(request));
+    }
 
-@PostMapping
-public ResponseEntity<ResponseDto> post(@RequestBody RequestDto request, HttpServletResponse response) {
-    response.setHeader("Cache-Control", "no-store");
-    return ResponseEntity.ok(taskService.task(request));
+    @GetMapping
+    public ResponseEntity<?> get(HttpServletResponse response, HttpServletRequest req) {
+        response.setHeader("Cache-Control", "no-store, no-cache, must-revalidate, proxy-revalidate");
+        response.setHeader("Pragma", "no-cache");
+        response.setDateHeader("Expires", 0);
+        System.out.println("GET HIT ✅ method: " + req.getMethod());
+        return ResponseEntity.ok(Map.of("operation_code", 1));
+    }
 }
-
 }

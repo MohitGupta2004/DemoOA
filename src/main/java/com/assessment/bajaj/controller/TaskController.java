@@ -24,14 +24,16 @@ public class TaskController {
         this.taskService = taskService;
     }
 
-   @PostMapping
-public ResponseEntity<ResponseDto> task(@RequestBody RequestDto request) {
-    ResponseDto response = taskService.task(request);
-    return ResponseEntity.ok(response);
-}
-
 @GetMapping
-public ResponseEntity<Map<String, Integer>> get() {
+public ResponseEntity<Map<String, Integer>> get(HttpServletResponse response) {
+    response.setHeader("Cache-Control", "no-store");
     return ResponseEntity.ok(Map.of("operation_code", 1));
 }
+
+@PostMapping
+public ResponseEntity<ResponseDto> post(@RequestBody RequestDto request, HttpServletResponse response) {
+    response.setHeader("Cache-Control", "no-store");
+    return ResponseEntity.ok(taskService.task(request));
+}
+
 }

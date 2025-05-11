@@ -44,4 +44,4 @@ public class TaskController {
         return ResponseEntity.ok(Map.of("operation_code", 1));
     }
 }
-}
+
